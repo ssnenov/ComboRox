@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComboRox.Models", "ComboRox.Models\ComboRox.Models.csproj", "{B52B7589-4F24-4050-9B3D-EAD0F4AFF9FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComboRox.Core", "ComboRox.Core\ComboRox.Core.csproj", "{79146E2C-D71F-4A05-90AA-5A3014C6CAF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9B883F88-3C13-4D54-9D3F-40342847A055}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComboRox.Core.UnitTests", "ComboRox.Core.UnitTests\ComboRox.Core.UnitTests.csproj", "{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B52B7589-4F24-4050-9B3D-EAD0F4AFF9FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52B7589-4F24-4050-9B3D-EAD0F4AFF9FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52B7589-4F24-4050-9B3D-EAD0F4AFF9FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52B7589-4F24-4050-9B3D-EAD0F4AFF9FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79146E2C-D71F-4A05-90AA-5A3014C6CAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79146E2C-D71F-4A05-90AA-5A3014C6CAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79146E2C-D71F-4A05-90AA-5A3014C6CAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79146E2C-D71F-4A05-90AA-5A3014C6CAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAE66E9C-6D97-49E6-88B2-FE9ADB89C09F} = {9B883F88-3C13-4D54-9D3F-40342847A055}
+	EndGlobalSection
+EndGlobal
