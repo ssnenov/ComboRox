@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ComboRox.Core.Filters;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
@@ -52,24 +51,7 @@ namespace ComboRox.Core
             return modulesSettingsObj;
         }
 
-        public IQueryable<TType> ApplyModulesExpressions<TType>(IQueryable<TType> query,
-            ComboRequestJson comboRequestJson,
-            IModulesSettings modulesSettings = null)
-            where TType : class
-        {
-            IModulesSettings settings = this.GetModulesSettings(comboRequestJson, modulesSettings);
-            IResultData resultObject = new ResultData();
-
-            foreach (var module in this.Modules)
-            {
-                query = module.ApplyExpression(query, settings);
-                resultObject = module.ConstructResult(query, resultObject);
-            }
-
-            return query;
-        }
-
-        public IEnumerable<TType> ApplyModulesExpressions<TType>(IEnumerable<TType> collection,
+        public IResultData ApplyModulesExpressions<TType>(IEnumerable<TType> collection,
             ComboRequestJson comboRequestJson,
             IModulesSettings modulesSettings = null) 
             where TType : class
@@ -83,7 +65,7 @@ namespace ComboRox.Core
                 resultObject = module.ConstructResult(collection, resultObject);
             }
 
-            return collection;
+            return resultObject;
         }
     }
 }

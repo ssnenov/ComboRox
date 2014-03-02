@@ -17,15 +17,14 @@ namespace ComboRox.Core.Filters
         public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings modulesSettings) where TType : class
         {
             var expressionToApply = FiltersExpressionBuilder.Create<TType>(modulesSettings.Filters);
+            var query = collection as IQueryable<TType>;
+
+            if (query != null)
+            {
+                return query.Where(expressionToApply);
+            }
 
             return collection.Where(expressionToApply.Compile());
-        }
-
-        public IQueryable<TType> ApplyExpression<TType>(IQueryable<TType> collection, IModulesSettings modulesSettings) where TType : class
-        {
-            var expressionToApply = FiltersExpressionBuilder.Create<TType>(modulesSettings.Filters);
-
-            return collection.Where(expressionToApply);
         }
 
         public IResultData ConstructResult<TType>(IEnumerable<TType> collection, IResultData resultObject)
