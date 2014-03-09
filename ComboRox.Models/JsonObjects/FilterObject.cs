@@ -8,7 +8,7 @@ namespace ComboRox.Models.JsonObjects
 
         public string prop { get; set; }
 
-        public string value { get; set; }
+        public object value { get; set; }
 
         public List<FilterObject> or { get; set; }
     }
