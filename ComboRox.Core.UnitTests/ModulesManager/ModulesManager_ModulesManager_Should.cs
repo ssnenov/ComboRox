@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ComboRox.Core.UnitTests.ModulesManager
@@ -18,7 +19,7 @@ namespace ComboRox.Core.UnitTests.ModulesManager
             var modulesManager = new Core.ModulesManager(listOfAdditionalModules);
 
             // Assert
-            Assert.IsNotNull(modulesManager.Modules.Last.Value as CustomTestingModule);
+            Assert.IsNotNull(modulesManager.Modules.Values.Last() as CustomTestingModule);
         }
     }
 }

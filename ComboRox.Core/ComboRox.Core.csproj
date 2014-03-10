@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuiltInModules.cs" />
     <Compile Include="ComboRox.cs" />
     <Compile Include="Filters\FiltersBuilder.cs" />
     <Compile Include="Filters\FiltersExpressionBuilder.cs" />

@@ -7,6 +7,13 @@ namespace ComboRox.Core.Filters
 {
     public class FiltersModule : IModule
     {
+        private const string _moduleName = "Filters";
+
+        public string ModuleName
+        {
+            get { return _moduleName; }
+        }
+
         public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)
         {
             modulesSettings.Filters = new FiltersBuilder().Create(requestJson.Filters);

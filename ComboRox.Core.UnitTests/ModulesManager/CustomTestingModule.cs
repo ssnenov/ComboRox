@@ -6,7 +6,7 @@ namespace ComboRox.Core.UnitTests.ModulesManager
 {
     class CustomTestingModule : IModule
     {
-        public string ModuleName = "CustomTestingModule";
+        private const string _moduleName = "CustomTestingModule";
 
         public Models.IModulesSettings Initialize(Models.JsonObjects.IComboRequestJson requestJson, Models.IModulesSettings request)
         {
@@ -26,6 +26,11 @@ namespace ComboRox.Core.UnitTests.ModulesManager
         public Models.IResultData ConstructResult<TType>(IEnumerable<TType> collection, Models.IResultData resultObject)
         {
             throw new NotImplementedException();
+        }
+
+        string IModule.ModuleName
+        {
+            get { return _moduleName; }
         }
     }
 }

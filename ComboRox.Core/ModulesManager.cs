@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ComboRox.Core.Filters;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
 
@@ -15,19 +14,15 @@ namespace ComboRox.Core
             get { return _instance ?? (_instance = new ModulesManager()); }
         }
 
-        public LinkedList<IModule> Modules { get; private set; }
+        public Dictionary<string, IModule> Modules { get; private set; }
 
         public ModulesManager(List<IModule> additionalModules = null)
         {
-            IModule filtersModule = new FiltersModule();
-
-            this.Modules = new LinkedList<IModule>();
-
-            Modules.AddLast(filtersModule);
+            this.Modules = new Dictionary<string, IModule>(BuiltInModules.Modules);
 
             if (additionalModules != null)
             {
-                additionalModules.ForEach(x => this.Modules.AddLast(x));
+                additionalModules.ForEach(x => this.Modules.Add(x.ModuleName, x));
             }
         }
 
@@ -43,7 +38,7 @@ namespace ComboRox.Core
                 modulesSettingsObj = new ModulesSettings();
             }
 
-            foreach (var module in Modules)
+            foreach (var module in Modules.Values)
             {
                 module.Initialize(comboRequestJson, modulesSettingsObj);
             }
@@ -53,13 +48,13 @@ namespace ComboRox.Core
 
         public IResultData ApplyModulesExpressions<TType>(IEnumerable<TType> collection,
             ComboRequestJson comboRequestJson,
-            IModulesSettings modulesSettings = null) 
+            IModulesSettings modulesSettings = null)
             where TType : class
         {
             IModulesSettings settings = this.GetModulesSettings(comboRequestJson, modulesSettings);
             IResultData resultObject = new ResultData();
 
-            foreach (var module in this.Modules)
+            foreach (var module in this.Modules.Values)
             {
                 collection = module.ApplyExpression(collection, settings);
                 resultObject = module.ConstructResult(collection, resultObject);
