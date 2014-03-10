@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonObjects\PaginationObject.cs" />
     <Compile Include="ModulesSettings.cs" />
     <Compile Include="IModulesSettings.cs" />
     <Compile Include="IResultData.cs" />

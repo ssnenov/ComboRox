@@ -1,16 +1,24 @@
 ﻿using System.Collections.Generic;
 using ComboRox.Core.Filters;
+using ComboRox.Core.Pagination;
 
 namespace ComboRox.Core
 {
     public class BuiltInModules
     {
-        public static Dictionary<string, IModule> Modules = new Dictionary<string, IModule>();
+        private static Dictionary<string, IModule> _modules;
 
-        public BuiltInModules()
+        public static Dictionary<string, IModule> GetModules()
         {
+            _modules = new Dictionary<string, IModule>();
+
             IModule filtersModule = new FiltersModule();
-            Modules.Add(filtersModule.ModuleName, filtersModule);
+            IModule paginationModule = new PaginationModule();
+
+            _modules.Add(filtersModule.ModuleName, filtersModule);
+            _modules.Add(paginationModule.ModuleName, paginationModule);
+
+            return _modules;
         }
     }
 }

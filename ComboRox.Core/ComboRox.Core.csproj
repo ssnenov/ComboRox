@@ -45,6 +45,7 @@
     <Compile Include="Filters\FiltersExpressionBuilder.cs" />
     <Compile Include="IComponentBuilder.cs" />
     <Compile Include="IModule.cs" />
+    <Compile Include="Pagination\PaginationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModulesManager.cs" />
     <Compile Include="Filters\FiltersModule.cs" />
