@@ -57,6 +57,9 @@
     <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilder_CreateFilterExpression_Should.cs" />
     <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilderTestsBase.cs" />
     <Compile Include="ModulesManager\ModulesManager_GetModulesSettings_Should.cs" />
+    <Compile Include="ModulesManager\ModulesManager_ApplyModulesExpressions_Should.cs" />
+    <Compile Include="Pagination\PaginationModule_Initialize_Should.cs" />
+    <Compile Include="Pagination\PaginationModule_AppluExpression_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

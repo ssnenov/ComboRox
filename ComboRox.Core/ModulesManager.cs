@@ -18,7 +18,7 @@ namespace ComboRox.Core
 
         public ModulesManager(List<IModule> additionalModules = null)
         {
-            this.Modules = new Dictionary<string, IModule>(BuiltInModules.Modules);
+            this.Modules = new Dictionary<string, IModule>(BuiltInModules.GetModules());
 
             if (additionalModules != null)
             {
