@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ComboRox.Models;
+using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core.Pagination
 {
@@ -16,28 +17,28 @@ namespace ComboRox.Core.Pagination
             }
         }
 
-        public IModulesSettings Initialize(Models.JsonObjects.IComboRequestJson requestJson, IModulesSettings request)
+        public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)
         {
             if (requestJson.Pagination == null)
             {
-                return request;
+                return modulesSettings;
             }
 
-            request.Pagination = requestJson.Pagination;
+            modulesSettings.Pagination = requestJson.Pagination;
 
-            return request;
+            return modulesSettings;
         }
 
-        public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings request) where TType : class
+        public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings modulesSettings) where TType : class
         {
-            if (request.Pagination == null)
+            if (modulesSettings.Pagination == null)
             {
                 return collection;
             }
 
-            int pageSize = request.Pagination.PageSize;
+            int pageSize = modulesSettings.Pagination.PageSize;
 
-            return collection.Skip((request.Pagination.Page - 1) * pageSize)
+            return collection.Skip((modulesSettings.Pagination.Page - 1) * pageSize)
                              .Take(pageSize);
         }
 

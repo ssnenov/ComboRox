@@ -71,8 +71,13 @@ namespace ComboRox.Core.Filters
 
         public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
         {
-            var itemParameter = Expression.Parameter(typeof(TType), "dataItem");
-            return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter), itemParameter);
+            if (filters != null && filters.Count > 0)
+            {
+                var itemParameter = Expression.Parameter(typeof(TType), "dataItem");
+                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter), itemParameter);
+            }
+
+            return null;
         }
     }
 }

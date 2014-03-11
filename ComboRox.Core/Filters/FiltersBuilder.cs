@@ -9,6 +9,11 @@ namespace ComboRox.Core.Filters
     {
         public List<Filter> Create(IEnumerable<FilterObject> componentObjects)
         {
+            if (componentObjects == null)
+            {
+                return new List<Filter>();
+            }
+
             return ExtractFilters(componentObjects);
         }
 

@@ -24,6 +24,12 @@ namespace ComboRox.Core.Filters
         public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings modulesSettings) where TType : class
         {
             var expressionToApply = FiltersExpressionBuilder.Create<TType>(modulesSettings.Filters);
+            
+            if (expressionToApply == null)
+            {
+                return collection;
+            }
+
             var query = collection as IQueryable<TType>;
 
             if (query != null)
