@@ -17,7 +17,8 @@ namespace ComboRox.Core.Filters
             {
                 foreach (var filter in filters)
                 {
-                    property = Expression.PropertyOrField(itemParameter, filter.PropertyName);
+                    property = Expression.PropertyOrField(itemParameter, filter.PropertyName); 
+                    //TODO: Create Property parser that parses the string and select inner propperties
 
                     filterExpression = CompareExpressionByOperator(
                                 filter.Operator,

@@ -37,13 +37,14 @@ namespace ComboRox.Core.Pagination
 
             int pageSize = request.Pagination.PageSize;
 
-            return collection.Skip(request.Pagination.Page - 1 * pageSize)
+            return collection.Skip((request.Pagination.Page - 1) * pageSize)
                              .Take(pageSize);
         }
 
         public IResultData ConstructResult<TType>(IEnumerable<TType> collection, IResultData resultObject)
         {
             resultObject.Data = collection;
+            resultObject.Total = collection.Count();
 
             return resultObject;
         }
