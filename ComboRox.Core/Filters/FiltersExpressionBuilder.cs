@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using ComboRox.Models;
 
 namespace ComboRox.Core.Filters
 {
     public static class FiltersExpressionBuilder
     {
-        private static BinaryExpression ConcatenateAndOrExpressions(IEnumerable<Filter> filters, ParameterExpression itemParameter)
+        private static Dictionary<string, MethodInfo> cachedPropertyTypes = new Dictionary<string, MethodInfo>();
+
+        private static BinaryExpression ConcatenateAndOrExpressions(
+            IEnumerable<Filter> filters,
+            ParameterExpression itemParameter,
+            Type filterableClassType)
         {
             BinaryExpression where = null;
             MemberExpression property;
@@ -17,8 +23,10 @@ namespace ComboRox.Core.Filters
             {
                 foreach (var filter in filters)
                 {
-                    property = Expression.PropertyOrField(itemParameter, filter.PropertyName); 
+                    property = Expression.Property(itemParameter, filter.PropertyName);
                     //TODO: Create Property parser that parses the string and select inner propperties
+
+                    filter.Value = ChangeValueType(filterableClassType, filter.PropertyName, filter.Value);
 
                     filterExpression = CompareExpressionByOperator(
                                 filter.Operator,
@@ -27,7 +35,7 @@ namespace ComboRox.Core.Filters
 
                     if (filter.OrFilters != null && filter.OrFilters.Count > 0)
                     {
-                        BinaryExpression orFiltersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter);
+                        BinaryExpression orFiltersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
                         if (orFiltersExpressions != null)
                         {
                             filterExpression = Expression.OrElse(filterExpression, orFiltersExpressions);
@@ -46,6 +54,38 @@ namespace ComboRox.Core.Filters
             }
 
             return where;
+        }
+
+        private static object ChangeValueType(Type filterableClassType, string propertyName, object value)
+        {
+            if ((value as string) != null)
+            {
+                var parseMethodInfo = GetMethodInfoFromCache(filterableClassType, propertyName);
+                if (parseMethodInfo != null)
+                {
+                    value = parseMethodInfo.Invoke(null, new[] { value });
+                }
+
+                return value;
+            }
+
+            return value;
+        }
+
+        private static MethodInfo GetMethodInfoFromCache(Type filterableClassType, string propertyName)
+        {
+            string propertyPath = string.Format("{0}.{1}", filterableClassType.Assembly.FullName, propertyName);
+
+            if (cachedPropertyTypes.ContainsKey(propertyPath))
+            {
+                return cachedPropertyTypes[propertyPath];
+            }
+
+            MethodInfo methodInfo = filterableClassType.GetProperty(propertyName).PropertyType.GetMethod("Parse");
+
+            cachedPropertyTypes.Add(propertyPath, methodInfo);
+
+            return methodInfo;
         }
 
         private static BinaryExpression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)
@@ -73,8 +113,10 @@ namespace ComboRox.Core.Filters
         {
             if (filters != null && filters.Count > 0)
             {
-                var itemParameter = Expression.Parameter(typeof(TType), "dataItem");
-                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter), itemParameter);
+                Type filterableClassType = typeof(TType);
+                var itemParameter = Expression.Parameter(filterableClassType, "dataItem");
+
+                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter, filterableClassType), itemParameter);
             }
 
             return null;

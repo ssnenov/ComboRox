@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuiltInModules.cs" />
-    <Compile Include="ComboRox.cs" />
+    <Compile Include="DataPreparation.cs" />
     <Compile Include="Filters\FiltersBuilder.cs" />
     <Compile Include="Filters\FiltersExpressionBuilder.cs" />
     <Compile Include="IComponentBuilder.cs" />

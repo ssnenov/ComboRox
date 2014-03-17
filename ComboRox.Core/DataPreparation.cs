@@ -4,9 +4,9 @@ using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core
 {
-    public class ComboRox
+    public class DataPreparation
     {
-        public static IResultData Magic<TType>(IEnumerable<TType> collection, ComboRequestJson requestJson) where TType : class
+        public static IResultData Prepare<TType>(IEnumerable<TType> collection, ComboRequestJson requestJson) where TType : class
         {
             var modulesManager = new ModulesManager();
 

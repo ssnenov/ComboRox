@@ -51,6 +51,34 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
         }
 
         [TestMethod]
+        public void ReturnCorrectExpression_WhenPassingOrExpresionFiltersAndPropertiesToParse()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var collection = new List<UserTestingClass>
+                {
+                    new UserTestingClass { FirstName = "Simeon", Id = userId }
+                };
+
+            Expression<Func<UserTestingClass, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<UserTestingClass>(new List<Filter>
+                {
+                    new Filter
+                        {
+                        Operator = Operator.Equals, 
+                        PropertyName = "Id",
+                        Value = userId.ToString(),
+                        OrFilters = new List<Filter> { new Filter { Operator = Operator.Equals, PropertyName = "FirstName", Value = "Simeon" } }
+                    }
+                });
+
+            // Act
+            var result = collection.AsQueryable().Where(filterExpression);
+
+            // Assert
+            Assert.AreEqual(1, result.Count());
+        }
+
+        [TestMethod]
         public void ReturnCorrectExpression_WhenPassingEqualsNotEqualsExpresionFilters()
         {
             // Arrange
@@ -73,6 +101,13 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
 
             // Assert
             Assert.AreEqual(1, result.Count());
+        }
+
+        private class UserTestingClass
+        {
+            public Guid Id { get; set; }
+
+            public string FirstName { get; set; }
         }
     }
 }
