@@ -55,9 +55,11 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
         {
             // Arrange
             Guid userId = Guid.NewGuid();
+            DateTime dateTimeNow = DateTime.Now;
+
             var collection = new List<UserTestingClass>
                 {
-                    new UserTestingClass { FirstName = "Simeon", Id = userId }
+                    new UserTestingClass { FirstName = "Simeon", Id = userId, TimeGenerated = dateTimeNow }
                 };
 
             Expression<Func<UserTestingClass, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<UserTestingClass>(new List<Filter>
@@ -67,7 +69,20 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                         Operator = Operator.Equals, 
                         PropertyName = "Id",
                         Value = userId.ToString(),
-                        OrFilters = new List<Filter> { new Filter { Operator = Operator.Equals, PropertyName = "FirstName", Value = "Simeon" } }
+                        OrFilters = new List<Filter> { 
+                            new Filter
+                            {
+                                Operator = Operator.Equals,
+                                PropertyName = "TimeGenerated.Day", 
+                                Value = dateTimeNow.Day
+                            },
+                            new Filter
+                            {
+                                Operator = Operator.Equals,
+                                PropertyName = "Id", 
+                                Value = userId.ToString()
+                            }
+                        }
                     }
                 });
 
@@ -108,6 +123,8 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
             public Guid Id { get; set; }
 
             public string FirstName { get; set; }
+
+            public DateTime TimeGenerated { get; set; }
         }
     }
 }

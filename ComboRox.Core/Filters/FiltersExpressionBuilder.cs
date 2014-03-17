@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using ComboRox.Core.Utilities;
 using ComboRox.Models;
 
 namespace ComboRox.Core.Filters
@@ -23,8 +24,7 @@ namespace ComboRox.Core.Filters
             {
                 foreach (var filter in filters)
                 {
-                    property = Expression.Property(itemParameter, filter.PropertyName);
-                    //TODO: Create Property parser that parses the string and select inner propperties
+                    property = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, filter.PropertyName);
 
                     filter.Value = ChangeValueType(filterableClassType, filter.PropertyName, filter.Value);
 
@@ -81,7 +81,9 @@ namespace ComboRox.Core.Filters
                 return cachedPropertyTypes[propertyPath];
             }
 
-            MethodInfo methodInfo = filterableClassType.GetProperty(propertyName).PropertyType.GetMethod("Parse");
+            MethodInfo methodInfo = RecursivelyPropertyInfoGetter
+                .GetPropertyTypeInfoRecursively(filterableClassType, propertyName)
+                .GetMethod("Parse");
 
             cachedPropertyTypes.Add(propertyPath, methodInfo);
 

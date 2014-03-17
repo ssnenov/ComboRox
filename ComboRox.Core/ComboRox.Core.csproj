@@ -43,6 +43,7 @@
     <Compile Include="DataPreparation.cs" />
     <Compile Include="Filters\FiltersBuilder.cs" />
     <Compile Include="Filters\FiltersExpressionBuilder.cs" />
+    <Compile Include="Utilities\RecursivelyPropertyInfoGetter.cs" />
     <Compile Include="IComponentBuilder.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="Pagination\PaginationModule.cs" />
