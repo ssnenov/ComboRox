@@ -15,15 +15,15 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                 {
                     new FilterObject
                         {
-                            op = "eq",
-                            prop = "FirstName",
-                            value = "test"
+                            Op = "eq",
+                            Prop = "FirstName",
+                            Value = "test"
                         },
                     new FilterObject
                         {
-                            op = "eq",
-                            prop = "LastName",
-                            value = "test"
+                            Op = "eq",
+                            Prop = "LastName",
+                            Value = "test"
                         }
                 };
         }

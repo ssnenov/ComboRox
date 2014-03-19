@@ -17,11 +17,11 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersBuilder
 
             var filterObjects = new List<FilterObject>
                 {
-                    new FilterObject { op = "eq", prop = "FirstName", value = "Jhon" , or = new List<FilterObject>
+                    new FilterObject { Op = "eq", Prop = "FirstName", Value = "Jhon" , Or = new List<FilterObject>
                         {
-                            new FilterObject { op = "neq", prop = "FirstName", value = "Peter" }
+                            new FilterObject { Op = "neq", Prop = "FirstName", Value = "Peter" }
                         }},
-                    new FilterObject { op = "cnt", prop = "LastName", value = "Brown" }
+                    new FilterObject { Op = "cnt", Prop = "LastName", Value = "Brown" }
                 };
 
             var expectedResult = new List<Filter>

@@ -4,12 +4,12 @@ namespace ComboRox.Models.JsonObjects
 {
     public class FilterObject
     {
-        public string op { get; set; }
+        public string Op { get; set; }
 
-        public string prop { get; set; }
+        public string Prop { get; set; }
 
-        public object value { get; set; }
+        public object Value { get; set; }
 
-        public List<FilterObject> or { get; set; }
+        public List<FilterObject> Or { get; set; }
     }
 }

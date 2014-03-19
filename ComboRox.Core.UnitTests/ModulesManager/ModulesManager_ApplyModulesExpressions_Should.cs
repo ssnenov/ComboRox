@@ -18,7 +18,7 @@ namespace ComboRox.Core.UnitTests.ModulesManager
             {
                 Filters = new List<FilterObject>
                     {
-                    new FilterObject { op = "eq", prop = "Page", value = 2}
+                    new FilterObject { Op = "eq", Prop = "Page", Value = 2}
                 }
             };
 
