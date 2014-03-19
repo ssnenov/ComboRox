@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using ComboRox.Core.Utilities;
@@ -9,8 +10,6 @@ namespace ComboRox.Core.Filters
 {
     public static class FiltersExpressionBuilder
     {
-        private static Dictionary<string, MethodInfo> cachedPropertyTypes = new Dictionary<string, MethodInfo>();
-
         private static BinaryExpression ConcatenateAndOrExpressions(
             IEnumerable<Filter> filters,
             ParameterExpression itemParameter,
@@ -26,7 +25,7 @@ namespace ComboRox.Core.Filters
                 {
                     property = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, filter.PropertyName);
 
-                    filter.Value = ChangeValueType(filterableClassType, filter.PropertyName, filter.Value);
+                    filter.Value = ValueParser.ParseValueToPropertyType(filterableClassType, property, filter.Value);
 
                     filterExpression = CompareExpressionByOperator(
                                 filter.Operator,
@@ -54,40 +53,6 @@ namespace ComboRox.Core.Filters
             }
 
             return where;
-        }
-
-        private static object ChangeValueType(Type filterableClassType, string propertyName, object value)
-        {
-            if ((value as string) != null)
-            {
-                var parseMethodInfo = GetMethodInfoFromCache(filterableClassType, propertyName);
-                if (parseMethodInfo != null)
-                {
-                    value = parseMethodInfo.Invoke(null, new[] { value });
-                }
-
-                return value;
-            }
-
-            return value;
-        }
-
-        private static MethodInfo GetMethodInfoFromCache(Type filterableClassType, string propertyName)
-        {
-            string propertyPath = string.Format("{0}.{1}", filterableClassType.Assembly.FullName, propertyName);
-
-            if (cachedPropertyTypes.ContainsKey(propertyPath))
-            {
-                return cachedPropertyTypes[propertyPath];
-            }
-
-            MethodInfo methodInfo = RecursivelyPropertyInfoGetter
-                .GetPropertyTypeInfoRecursively(filterableClassType, propertyName)
-                .GetMethod("Parse");
-
-            cachedPropertyTypes.Add(propertyPath, methodInfo);
-
-            return methodInfo;
         }
 
         private static BinaryExpression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)

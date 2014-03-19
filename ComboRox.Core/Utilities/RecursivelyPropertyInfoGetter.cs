@@ -17,18 +17,5 @@ namespace ComboRox.Core.Utilities
 
             return result;
         }
-
-        internal static Type GetPropertyTypeInfoRecursively(Type filterableClassType, string propertyName)
-        {
-            var properties = propertyName.Split('.');
-            Type result = filterableClassType.GetProperty(properties[0]).PropertyType;
-
-            for (int i = 1; i < properties.Length; i++)
-            {
-                result = result.GetProperty(properties[i]).PropertyType;
-            }
-
-            return result;
-        }
     }
 }
