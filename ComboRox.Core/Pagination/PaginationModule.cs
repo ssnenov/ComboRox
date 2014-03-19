@@ -7,13 +7,13 @@ namespace ComboRox.Core.Pagination
 {
     public class PaginationModule : IModule
     {
-        private const string _moduleName = "Pagination";
+        private const string Name = "Pagination";
 
         public string ModuleName
         {
             get
             {
-                return _moduleName;
+                return Name;
             }
         }
 

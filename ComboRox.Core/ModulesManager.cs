@@ -7,14 +7,7 @@ namespace ComboRox.Core
 {
     public class ModulesManager
     {
-        private static ModulesManager _instance;
-
-        public static ModulesManager GetManager
-        {
-            get { return _instance ?? (_instance = new ModulesManager()); }
-        }
-
-        public Dictionary<string, IModule> Modules { get; private set; }
+        private static ModulesManager instance;
 
         public ModulesManager(List<IModule> additionalModules = null)
         {
@@ -25,6 +18,13 @@ namespace ComboRox.Core
                 additionalModules.ForEach(x => this.Modules.Add(x.ModuleName, x));
             }
         }
+
+        public static ModulesManager GetManager
+        {
+            get { return instance ?? (instance = new ModulesManager()); }
+        }
+
+        public Dictionary<string, IModule> Modules { get; private set; }
 
         public IModulesSettings GetModulesSettings(IComboRequestJson comboRequestJson, IModulesSettings modulesSettingsObj)
         {
@@ -38,7 +38,7 @@ namespace ComboRox.Core
                 modulesSettingsObj = new ModulesSettings();
             }
 
-            foreach (var module in Modules.Values)
+            foreach (var module in this.Modules.Values)
             {
                 module.Initialize(comboRequestJson, modulesSettingsObj);
             }
@@ -46,7 +46,8 @@ namespace ComboRox.Core
             return modulesSettingsObj;
         }
 
-        public IResultData ApplyModulesExpressions<TType>(IEnumerable<TType> collection,
+        public IResultData ApplyModulesExpressions<TType>(
+            IEnumerable<TType> collection,
             ComboRequestJson comboRequestJson,
             IModulesSettings modulesSettings = null)
             where TType : class
