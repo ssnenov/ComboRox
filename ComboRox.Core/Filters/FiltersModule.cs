@@ -7,11 +7,11 @@ namespace ComboRox.Core.Filters
 {
     public class FiltersModule : IModule
     {
-        private const string _moduleName = "Filters";
+        private const string Name = "Filters";
 
         public string ModuleName
         {
-            get { return _moduleName; }
+            get { return Name; }
         }
 
         public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)

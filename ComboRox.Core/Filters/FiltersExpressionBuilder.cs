@@ -10,10 +10,23 @@ namespace ComboRox.Core.Filters
 {
     public static class FiltersExpressionBuilder
     {
+        public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
+        {
+            if (filters != null && filters.Count > 0)
+            {
+                Type filterableClassType = typeof(TType);
+                var itemParameter = Expression.Parameter(filterableClassType, "dataItem");
+
+                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter, filterableClassType), itemParameter);
+            }
+
+            return null;
+        }
+
         private static BinaryExpression ConcatenateAndOrExpressions(
-            IEnumerable<Filter> filters,
-            ParameterExpression itemParameter,
-            Type filterableClassType)
+    IEnumerable<Filter> filters,
+    ParameterExpression itemParameter,
+    Type filterableClassType)
         {
             BinaryExpression where = null;
             MemberExpression property;
@@ -34,10 +47,10 @@ namespace ComboRox.Core.Filters
 
                     if (filter.OrFilters != null && filter.OrFilters.Count > 0)
                     {
-                        BinaryExpression orFiltersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
-                        if (orFiltersExpressions != null)
+                        BinaryExpression filtersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
+                        if (filtersExpressions != null)
                         {
-                            filterExpression = Expression.OrElse(filterExpression, orFiltersExpressions);
+                            filterExpression = Expression.OrElse(filterExpression, filtersExpressions);
                         }
                     }
 
@@ -60,7 +73,7 @@ namespace ComboRox.Core.Filters
             switch (op)
             {
                 case Operator.Contains:
-                    return null; //TODO
+                    return null; // TODO
 
                 case Operator.GreaterThan:
                     return Expression.GreaterThan(property, filterValue);
@@ -74,19 +87,6 @@ namespace ComboRox.Core.Filters
                 default:
                     return Expression.Equal(property, filterValue);
             }
-        }
-
-        public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
-        {
-            if (filters != null && filters.Count > 0)
-            {
-                Type filterableClassType = typeof(TType);
-                var itemParameter = Expression.Parameter(filterableClassType, "dataItem");
-
-                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter, filterableClassType), itemParameter);
-            }
-
-            return null;
         }
     }
 }

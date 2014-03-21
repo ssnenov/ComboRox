@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using ComboRox.Models;
+﻿using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace ComboRox.Core.UnitTests.ModulesManager
 {

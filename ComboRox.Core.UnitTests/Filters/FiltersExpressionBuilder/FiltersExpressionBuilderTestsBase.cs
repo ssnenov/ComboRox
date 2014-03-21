@@ -6,7 +6,12 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
 {
     public class FiltersExpressionBuilderTestsBase
     {
-        public List<FilterObject> collection;
+        private List<FilterObject> collection;
+
+        public List<FilterObject> Collection
+        {
+            get { return this.collection; }
+        }
 
         [TestInitialize]
         public void InitializeData()
@@ -15,15 +20,15 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                 {
                     new FilterObject
                         {
-                            op = "eq",
-                            prop = "FirstName",
-                            value = "test"
+                            Op = "eq",
+                            Prop = "FirstName",
+                            Value = "test"
                         },
                     new FilterObject
                         {
-                            op = "eq",
-                            prop = "LastName",
-                            value = "test"
+                            Op = "eq",
+                            Prop = "LastName",
+                            Value = "test"
                         }
                 };
         }

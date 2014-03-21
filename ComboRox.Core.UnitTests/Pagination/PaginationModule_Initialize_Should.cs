@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ComboRox.Core.Pagination;
 using ComboRox.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ComboRox.Core.Pagination;
 using ComboRox.Models.JsonObjects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace ComboRox.Core.UnitTests.Pagination
 {

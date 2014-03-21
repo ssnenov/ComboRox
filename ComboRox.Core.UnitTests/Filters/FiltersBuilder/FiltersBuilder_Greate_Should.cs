@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ComboRox.Models;
+﻿using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ComboRox.Core.UnitTests.Filters.FiltersBuilder
 {
@@ -17,20 +17,35 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersBuilder
 
             var filterObjects = new List<FilterObject>
                 {
-                    new FilterObject { op = "eq", prop = "FirstName", value = "Jhon" , or = new List<FilterObject>
+                    new FilterObject 
+                    { 
+                        Op = "eq", Prop = "FirstName", Value = "Jhon", Or = new List<FilterObject>
                         {
-                            new FilterObject { op = "neq", prop = "FirstName", value = "Peter" }
-                        }},
-                    new FilterObject { op = "cnt", prop = "LastName", value = "Brown" }
+                            new FilterObject
+                                {
+                                    Op = "neq", Prop = "FirstName", Value = "Peter"
+                                }
+                        }
+                    },
+                    new FilterObject { Op = "cnt", Prop = "LastName", Value = "Brown" }
                 };
 
             var expectedResult = new List<Filter>
                 {
-                    new Filter { Operator = Operator.Equals, PropertyName = "FirstName", Value = "Jhon", OrFilters = new List<Filter>
+                    new Filter 
+                    { 
+                        Operator = Operator.Equals, PropertyName = "FirstName", Value = "Jhon", OrFilters = new List<Filter>
                         {
-                            new Filter { Operator = Operator.NotEquals, PropertyName = "FirstName", Value = "Peter" }
-                        }},
-                        new Filter { Operator = Operator.Contains, PropertyName = "LastName", Value = "Brown" }
+                            new Filter
+                                {
+                                    Operator = Operator.NotEquals, PropertyName = "FirstName", Value = "Peter"
+                                }
+                        }
+                    },
+                        new Filter
+                            {
+                                Operator = Operator.Contains, PropertyName = "LastName", Value = "Brown"
+                            }
                 };
 
             // Act
