@@ -22,7 +22,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                 });
 
             // Act
-            var result = collection.AsQueryable().Where(filterExpression);
+            var result = Collection.AsQueryable().Where(filterExpression);
 
             // Assert
             Assert.AreEqual(0, result.Count());
@@ -44,7 +44,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                 });
 
             // Act
-            var result = collection.AsQueryable().Where(filterExpression);
+            var result = Collection.AsQueryable().Where(filterExpression);
 
             // Assert
             Assert.AreEqual(2, result.Count());
@@ -69,7 +69,8 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                         Operator = Operator.Equals, 
                         PropertyName = "Id",
                         Value = userId.ToString(),
-                        OrFilters = new List<Filter> { 
+                        OrFilters = new List<Filter> 
+                        { 
                             new Filter
                             {
                                 Operator = Operator.Equals,
@@ -105,14 +106,16 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                         PropertyName = "prop",
                         Value = "FirstName"
                     },
-                    new Filter { 
+                    new Filter 
+                    { 
                         Operator = Operator.NotEquals,
                         PropertyName = "prop",
-                        Value = "LastName" }
+                        Value = "LastName" 
+                    }
                 });
 
             // Act
-            var result = collection.AsQueryable().Where(filterExpression);
+            var result = Collection.AsQueryable().Where(filterExpression);
 
             // Assert
             Assert.AreEqual(1, result.Count());

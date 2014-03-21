@@ -18,14 +18,14 @@ namespace ComboRox.Core.UnitTests.ModulesManager
             {
                 Filters = new List<FilterObject>
                     {
-                    new FilterObject { Op = "eq", Prop = "Page", Value = 2}
+                    new FilterObject { Op = "eq", Prop = "Page", Value = 2 }
                 }
             };
 
             var collection = new List<PaginationObject>
                 {
-                    new PaginationObject { Page = 1, PageSize = 10},
-                    new PaginationObject { Page = 2, PageSize = 10}
+                    new PaginationObject { Page = 1, PageSize = 10 },
+                    new PaginationObject { Page = 2, PageSize = 10 }
                 };
 
             // Act
@@ -36,7 +36,7 @@ namespace ComboRox.Core.UnitTests.ModulesManager
                 {
                     Data = new List<PaginationObject>
                     {
-                        new PaginationObject { Page = 2, PageSize = 10}
+                        new PaginationObject { Page = 2, PageSize = 10 }
                     }
                 };
             int expectedCount = expected.Data.Cast<PaginationObject>().Count();

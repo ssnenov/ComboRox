@@ -6,7 +6,12 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
 {
     public class FiltersExpressionBuilderTestsBase
     {
-        public List<FilterObject> collection;
+        private List<FilterObject> collection;
+
+        public List<FilterObject> Collection
+        {
+            get { return this.collection; }
+        }
 
         [TestInitialize]
         public void InitializeData()
