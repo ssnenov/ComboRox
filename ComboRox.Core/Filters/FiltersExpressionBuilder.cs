@@ -24,9 +24,9 @@ namespace ComboRox.Core.Filters
         }
 
         private static BinaryExpression ConcatenateAndOrExpressions(
-    IEnumerable<Filter> filters,
-    ParameterExpression itemParameter,
-    Type filterableClassType)
+        IEnumerable<Filter> filters,
+        ParameterExpression itemParameter,
+        Type filterableClassType)
         {
             BinaryExpression where = null;
             MemberExpression property;
