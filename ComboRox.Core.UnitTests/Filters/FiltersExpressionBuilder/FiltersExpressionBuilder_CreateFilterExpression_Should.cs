@@ -15,7 +15,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
         public void ReturnZeroItems_AfterFiltering()
         {
             // Arrange
-            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<FilterObject>(new List<Filter>
+            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionFactory.Create<FilterObject>(new List<Filter>
                 {
                     new Filter { Operator = Operator.Equals, PropertyName = "prop", Value = "FirstName" },
                     new Filter { Operator = Operator.Equals, PropertyName = "prop", Value = "LastName" }
@@ -32,7 +32,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
         public void ReturnCorrectExpression_WhenPassingOrExpresionFilters()
         {
             // Arrange
-            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<FilterObject>(new List<Filter>
+            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionFactory.Create<FilterObject>(new List<Filter>
                 {
                     new Filter
                         {
@@ -62,7 +62,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
                     new UserTestingClass { FirstName = "Simeon", Id = userId, TimeGenerated = dateTimeNow }
                 };
 
-            Expression<Func<UserTestingClass, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<UserTestingClass>(new List<Filter>
+            Expression<Func<UserTestingClass, bool>> filterExpression = Core.Filters.FiltersExpressionFactory.Create<UserTestingClass>(new List<Filter>
                 {
                     new Filter
                         {
@@ -98,7 +98,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersExpressionBuilder
         public void ReturnCorrectExpression_WhenPassingEqualsNotEqualsExpresionFilters()
         {
             // Arrange
-            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionBuilder.Create<FilterObject>(new List<Filter>
+            Expression<Func<FilterObject, bool>> filterExpression = Core.Filters.FiltersExpressionFactory.Create<FilterObject>(new List<Filter>
                 {
                     new Filter
                         {

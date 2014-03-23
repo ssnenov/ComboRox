@@ -5,7 +5,7 @@ using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core.Filters
 {
-    public class FiltersBuilder : IComponentBuilder<Filter, FilterObject>
+    public class FiltersFactory : IComponentFactory<Filter, FilterObject>
     {
         public List<Filter> Create(IEnumerable<FilterObject> componentObjects)
         {

@@ -41,12 +41,12 @@
   <ItemGroup>
     <Compile Include="BuiltInModules.cs" />
     <Compile Include="DataPreparation.cs" />
-    <Compile Include="Filters\FiltersBuilder.cs" />
-    <Compile Include="Filters\FiltersExpressionBuilder.cs" />
+    <Compile Include="Filters\FiltersFactory.cs" />
+    <Compile Include="Filters\FiltersExpressionFactory.cs" />
     <Compile Include="Utilities\EventHandler.cs" />
     <Compile Include="Utilities\ValueParser.cs" />
     <Compile Include="Utilities\RecursivelyPropertyInfoGetter.cs" />
-    <Compile Include="IComponentBuilder.cs" />
+    <Compile Include="IComponentFactory.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="Pagination\PaginationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

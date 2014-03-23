@@ -2,7 +2,7 @@
 
 namespace ComboRox.Core
 {
-    public interface IComponentBuilder<TComponent, in TComponentJsonObject>
+    public interface IComponentFactory<TComponent, in TComponentJsonObject>
     {
         List<TComponent> Create(IEnumerable<TComponentJsonObject> componentObjects);
     }

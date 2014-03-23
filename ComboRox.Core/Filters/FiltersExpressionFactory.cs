@@ -8,7 +8,7 @@ using ComboRox.Models;
 
 namespace ComboRox.Core.Filters
 {
-    public static class FiltersExpressionBuilder
+    public static class FiltersExpressionFactory
     {
         public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
         {

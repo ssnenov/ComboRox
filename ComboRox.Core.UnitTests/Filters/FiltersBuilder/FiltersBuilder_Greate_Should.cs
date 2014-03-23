@@ -13,7 +13,7 @@ namespace ComboRox.Core.UnitTests.Filters.FiltersBuilder
         public void ReturnCorrectCollection()
         {
             // Arrange
-            IComponentBuilder<Filter, FilterObject> filtersBuilder = new Core.Filters.FiltersBuilder();
+            IComponentFactory<Filter, FilterObject> filtersBuilder = new Core.Filters.FiltersFactory();
 
             var filterObjects = new List<FilterObject>
                 {
