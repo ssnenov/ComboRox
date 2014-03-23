@@ -29,6 +29,21 @@ namespace ComboRox.Core
 
         public Dictionary<string, IModule> Modules { get; private set; }
 
+        public void RegisterModule(IModule module)
+        {
+            this.Modules.Add(module.ModuleName, module);
+        }
+
+        public void UnregisterModule(string moduleName)
+        {
+            this.Modules.Remove(moduleName);
+        }
+
+        public void UnregisterModule(IModule module)
+        {
+            this.UnregisterModule(module.ModuleName);
+        }
+
         public IModulesSettings GetModulesSettings(IComboRequestJson comboRequestJson, IModulesSettings modulesSettingsObj)
         {
             if (comboRequestJson == null)
