@@ -51,11 +51,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Filters\UserTestingClass.cs" />
     <Compile Include="ModulesManager\CustomTestingModule.cs" />
     <Compile Include="ModulesManager\ModulesManager_ModulesManager_Should.cs" />
     <Compile Include="Filters\FiltersBuilder\FiltersBuilder_Greate_Should.cs" />
-    <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilder_CreateFilterExpression_Should.cs" />
-    <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilderTestsBase.cs" />
+    <Compile Include="Filters\FiltersExpressionFactory\FiltersExpressionFactory_CreateFilterExpression_Should.cs" />
+    <Compile Include="Filters\FiltersExpressionFactory\FiltersExpressionFactoryTestsBase.cs" />
     <Compile Include="ModulesManager\ModulesManager_GetModulesSettings_Should.cs" />
     <Compile Include="ModulesManager\ModulesManager_ApplyModulesExpressions_Should.cs" />
     <Compile Include="Pagination\PaginationModule_Initialize_Should.cs" />
