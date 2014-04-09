@@ -44,6 +44,10 @@
     <Compile Include="Filters\FiltersFactory.cs" />
     <Compile Include="Filters\FiltersExpressionFactory.cs" />
     <Compile Include="Utilities\EventHandler.cs" />
+    <Compile Include="Utilities\Guard\Guard.cs" />
+    <Compile Include="Utilities\Guard\GuidRequirement.cs" />
+    <Compile Include="Utilities\Guard\RequirementBase.cs" />
+    <Compile Include="Utilities\Guard\StringRequirement.cs" />
     <Compile Include="Utilities\ValueParser.cs" />
     <Compile Include="Utilities\RecursivelyPropertyInfoGetter.cs" />
     <Compile Include="IComponentFactory.cs" />
