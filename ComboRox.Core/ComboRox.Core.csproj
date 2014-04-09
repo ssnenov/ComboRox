@@ -43,6 +43,7 @@
     <Compile Include="DataPreparation.cs" />
     <Compile Include="Filters\FiltersFactory.cs" />
     <Compile Include="Filters\FiltersExpressionFactory.cs" />
+    <Compile Include="Sorting\SortingModule.cs" />
     <Compile Include="Utilities\EventHandler.cs" />
     <Compile Include="Utilities\Guard\Guard.cs" />
     <Compile Include="Utilities\Guard\GuidRequirement.cs" />
