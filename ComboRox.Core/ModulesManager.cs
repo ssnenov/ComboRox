@@ -72,15 +72,26 @@ namespace ComboRox.Core
             where TType : class
         {
             IModulesSettings settings = this.GetModulesSettings(comboRequestJson, modulesSettings);
-            IResultData resultObject = new ResultData();
 
             foreach (var module in this.Modules.Values)
             {
                 collection = module.ApplyExpression(collection, settings);
-                resultObject = module.ConstructResult(collection, resultObject);
             }
 
-            this.DataPrepared.TriggerEvent(resultObject);
+            IResultData resultData = PrepareResult(collection);
+            this.DataPrepared.TriggerEvent(resultData);
+
+            return resultData;
+        }
+
+        private IResultData PrepareResult<TType>(IEnumerable<TType> collection)
+        {
+            IResultData resultObject = new ResultData();
+
+            foreach (var module in this.Modules.Values)
+            {
+                resultObject = module.ConstructResult(collection, resultObject);
+            }
 
             return resultObject;
         }
