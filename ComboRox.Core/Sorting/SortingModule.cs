@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ComboRox.Core.Utilities.Guard;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
-using ComboRox.Core.Utilities.Guard;
+using System;
+using System.Collections.Generic;
 
 namespace ComboRox.Core.Sorting
 {
