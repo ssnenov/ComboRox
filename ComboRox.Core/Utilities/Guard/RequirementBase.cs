@@ -4,9 +4,9 @@ namespace ComboRox.Core.Utilities.Guard
 {
     public class RequirementBase<T>
     {
-        public readonly T ParameterValue;
+        protected internal readonly T ParameterValue;
 
-        public readonly string ParameterName;
+        protected internal readonly string ParameterName;
 
         public RequirementBase(T parameterValue, string parameterName)
         {
