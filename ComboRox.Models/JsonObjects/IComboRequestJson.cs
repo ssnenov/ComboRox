@@ -6,6 +6,8 @@ namespace ComboRox.Models.JsonObjects
     {
         List<FilterObject> Filters { get; set; }
 
+        SortingObject Sorting { get; set; }
+
         PaginationObject Pagination { get; set; }
     }
 }

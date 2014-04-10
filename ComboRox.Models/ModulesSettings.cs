@@ -7,6 +7,8 @@ namespace ComboRox.Models
     {
         public List<Filter> Filters { get; set; }
 
+        public SortingObject Sorting { get; set; }
+
         public PaginationObject Pagination { get; set; }
     }
 }

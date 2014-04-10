@@ -8,9 +8,9 @@ namespace ComboRox.Core
     {
         string ModuleName { get; }
 
-        IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings request);
+        IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings);
 
-        IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings request) where TType : class;
+        IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings modulesSettings) where TType : class;
 
         IResultData ConstructResult<TType>(IEnumerable<TType> collection, IResultData resultObject);
     }

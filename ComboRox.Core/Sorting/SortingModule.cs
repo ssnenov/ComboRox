@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
+using ComboRox.Core.Utilities.Guard;
 
 namespace ComboRox.Core.Sorting
 {
@@ -17,9 +18,14 @@ namespace ComboRox.Core.Sorting
             get { return Name; }
         }
 
-        public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings request)
+        public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)
         {
-            throw new NotImplementedException();
+            Guard.Requires(requestJson, "requestJson")
+                .IsNotNull();
+
+            modulesSettings.Sorting = requestJson.Sorting;
+
+            return modulesSettings;
         }
 
         public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings request) where TType : class
