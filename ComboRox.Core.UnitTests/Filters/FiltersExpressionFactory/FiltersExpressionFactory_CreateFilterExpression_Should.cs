@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Expressions;
 

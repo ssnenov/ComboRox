@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using ComboRox.Core.Utilities;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 
 namespace ComboRox.Core.Filters
 {
