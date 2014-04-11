@@ -1,4 +1,5 @@
 ﻿using ComboRox.Models.Enums;
+
 namespace ComboRox.Models.JsonObjects
 {
     public class SortingObject
