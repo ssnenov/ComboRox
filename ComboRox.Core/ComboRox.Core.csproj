@@ -46,8 +46,10 @@
     <Compile Include="Sorting\SortingExpressionFactory.cs" />
     <Compile Include="Sorting\SortingModule.cs" />
     <Compile Include="Utilities\EventHandler.cs" />
+    <Compile Include="Utilities\Guard\ArrayRequirement.cs" />
     <Compile Include="Utilities\Guard\Guard.cs" />
     <Compile Include="Utilities\Guard\GuidRequirement.cs" />
+    <Compile Include="Utilities\Guard\IEnumerableRequirement.cs" />
     <Compile Include="Utilities\Guard\RequirementBase.cs" />
     <Compile Include="Utilities\Guard\StringRequirement.cs" />
     <Compile Include="Utilities\ValueParser.cs" />
