@@ -23,12 +23,13 @@ namespace ComboRox.Core.Sorting
 
             itemParameter = Expression.Parameter(typeof(TType), "item");
             IOrderedEnumerable<TType> result = null;
-            MemberExpression propertyAccessor;
+            Expression propertyAccessor;
 
             if (ascendingSortings.Count > 0)
             {
                 propertyAccessor = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, ascendingSortings[0].Prop);
-
+                propertyAccessor = Expression.Convert(propertyAccessor, typeof(object));
+                
                 result = collection.OrderBy(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
 
                 for (int i = 1; i < ascendingSortings.Count; i++)
@@ -54,12 +55,12 @@ namespace ComboRox.Core.Sorting
             return result;
         }
 
-        private static IOrderedEnumerable<TType> ApplySortExpressionAscending<TType>(IOrderedEnumerable<TType> collection, MemberExpression propertyAccessor)
+        private static IOrderedEnumerable<TType> ApplySortExpressionAscending<TType>(IOrderedEnumerable<TType> collection, Expression propertyAccessor)
         {
             return collection.ThenBy(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
         }
 
-        private static IOrderedEnumerable<TType> ApplySortExpressionDescending<TType>(IOrderedEnumerable<TType> collection, MemberExpression propertyAccessor)
+        private static IOrderedEnumerable<TType> ApplySortExpressionDescending<TType>(IOrderedEnumerable<TType> collection, Expression propertyAccessor)
         {
             return collection.ThenByDescending(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
         }
