@@ -43,7 +43,14 @@ namespace ComboRox.Core.Sorting
             {
                 propertyAccessor = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, descendingSortings[0].Prop);
 
-                result = (result ?? collection).OrderBy(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
+                if (result == null)
+                {
+                    result = collection.OrderByDescending(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
+                }
+                else
+                {
+                    result = result.ThenByDescending(Expression.Lambda<Func<TType, object>>(propertyAccessor, itemParameter).Compile());
+                }
 
                 for (int i = 1; i < descendingSortings.Count; i++)
                 {
