@@ -42,6 +42,7 @@ namespace ComboRox.Core.Sorting
             if (descendingSortings.Count > 0)
             {
                 propertyAccessor = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, descendingSortings[0].Prop);
+                propertyAccessor = Expression.Convert(propertyAccessor, typeof(object));
 
                 if (result == null)
                 {

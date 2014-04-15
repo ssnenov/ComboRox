@@ -1,5 +1,4 @@
-﻿using ComboRox.Core.Utilities.Guard;
-using ComboRox.Models;
+﻿using ComboRox.Models;
 using ComboRox.Models.Enums;
 using ComboRox.Models.JsonObjects;
 using System.Collections.Generic;
@@ -18,9 +17,6 @@ namespace ComboRox.Core.Sorting
 
         public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)
         {
-            Guard.Requires(requestJson, "requestJson")
-                .IsNotNull();
-
             modulesSettings.Sorting = requestJson.Sorting;
 
             return modulesSettings;
