@@ -67,7 +67,7 @@ namespace ComboRox.Core
 
         public IResultData ApplyModulesExpressions<TType>(
             IEnumerable<TType> collection,
-            ComboRequestJson comboRequestJson,
+            IComboRequestJson comboRequestJson,
             IModulesSettings modulesSettings = null)
             where TType : class
         {
