@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core.Filters

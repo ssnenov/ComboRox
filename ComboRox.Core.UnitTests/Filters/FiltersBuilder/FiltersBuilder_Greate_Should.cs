@@ -1,4 +1,5 @@
 ﻿using ComboRox.Models;
+using ComboRox.Models.Enums;
 using ComboRox.Models.JsonObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;

@@ -16,6 +16,11 @@ namespace ComboRox.Core.Utilities
                 return value;
             }
 
+            if (valueAsString == "null")
+            {
+                return null;
+            }
+
             var parseMethod = GetLambdaFromCache(propertyExpression);
             
             return parseMethod(valueAsString);

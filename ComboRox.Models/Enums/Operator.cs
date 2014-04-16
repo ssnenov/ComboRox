@@ -1,4 +1,4 @@
-﻿namespace ComboRox.Models
+﻿namespace ComboRox.Models.Enums
 {
     public enum Operator
     {

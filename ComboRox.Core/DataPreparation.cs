@@ -7,12 +7,12 @@ namespace ComboRox.Core
 {
     public class DataPreparation
     {
-        public static IResultData Prepare<TType>(IEnumerable<TType> collection, ComboRequestJson requestJson) where TType : class
+        public static IResultData Prepare<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
         {
             return ModulesManager.GetManager.ApplyModulesExpressions(collection, requestJson);
         }
 
-        public static async Task<IResultData> PrepareAsync<TType>(IEnumerable<TType> collection, ComboRequestJson requestJson) where TType : class
+        public static async Task<IResultData> PrepareAsync<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
         {
             var backgroundTast =
                 Task<IResultData>.Factory.StartNew(() => 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Reflection;
 using ComboRox.Core.Utilities;
+using ComboRox.Core.Utilities.Guard;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 
 namespace ComboRox.Core.Filters
 {
@@ -23,14 +23,14 @@ namespace ComboRox.Core.Filters
             return null;
         }
 
-        private static BinaryExpression ConcatenateAndOrExpressions(
+        private static Expression ConcatenateAndOrExpressions(
         IEnumerable<Filter> filters,
         ParameterExpression itemParameter,
         Type filterableClassType)
         {
-            BinaryExpression where = null;
+            Expression where = null;
             MemberExpression property;
-            BinaryExpression filterExpression;
+            Expression filterExpression;
 
             if (filters != null)
             {
@@ -47,7 +47,7 @@ namespace ComboRox.Core.Filters
 
                     if (filter.OrFilters != null && filter.OrFilters.Count > 0)
                     {
-                        BinaryExpression filtersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
+                        Expression filtersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
                         if (filtersExpressions != null)
                         {
                             filterExpression = Expression.OrElse(filterExpression, filtersExpressions);
@@ -68,13 +68,16 @@ namespace ComboRox.Core.Filters
             return where;
         }
 
-        private static BinaryExpression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)
+        private static Expression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)
         {
             switch (op)
             {
-                case Operator.Contains:
-                    return null; // TODO
+                case Operator.Contains: // TODO: Test this functionality
+                    Guard.Requires(
+                        property.Type == typeof(string) && filterValue.Type == typeof(string),
+                        string.Format(@"You cannot use ""Contains"" operator for types {0} and {1}", property.Type, filterValue.Type));
 
+                    return Expression.Call(property, typeof(string).GetMethod("Contains"), filterValue);
                 case Operator.GreaterThan:
                     return Expression.GreaterThan(property, filterValue);
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ComboRox.Core.UnitTests.Filters
+namespace ComboRox.Core.UnitTests
 {
     public class UserTestingClass
     {
