@@ -7,23 +7,23 @@ namespace ComboRox.Core.Filters
 {
     public class FiltersModule : IModule
     {
-        private const string _moduleName = "Filters";
+        private const string Name = "Filters";
 
         public string ModuleName
         {
-            get { return _moduleName; }
+            get { return Name; }
         }
 
         public IModulesSettings Initialize(IComboRequestJson requestJson, IModulesSettings modulesSettings)
         {
-            modulesSettings.Filters = new FiltersBuilder().Create(requestJson.Filters);
+            modulesSettings.Filters = new FiltersFactory().Create(requestJson.Filters);
 
             return modulesSettings;
         }
 
         public IEnumerable<TType> ApplyExpression<TType>(IEnumerable<TType> collection, IModulesSettings modulesSettings) where TType : class
         {
-            var expressionToApply = FiltersExpressionBuilder.Create<TType>(modulesSettings.Filters);
+            var expressionToApply = FiltersExpressionFactory.Create<TType>(modulesSettings.Filters);
             
             if (expressionToApply == null)
             {

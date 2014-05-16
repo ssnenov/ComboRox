@@ -16,6 +16,11 @@ namespace ComboRox.Core.Utilities
                 return value;
             }
 
+            if (valueAsString == "null")
+            {
+                return null;
+            }
+
             var parseMethod = GetLambdaFromCache(propertyExpression);
             
             return parseMethod(valueAsString);
@@ -24,16 +29,16 @@ namespace ComboRox.Core.Utilities
         private static Func<string, object> GetLambdaFromCache(Expression propertyExpression)
         {
             string typeAssemblyFullName = propertyExpression.Type.FullName;
-            if(CachedLambdas.ContainsKey(typeAssemblyFullName))
+            if (CachedLambdas.ContainsKey(typeAssemblyFullName))
             {
                 return CachedLambdas[typeAssemblyFullName];
             }
 
             var parseMethodParameters = new[] { Expression.Parameter(typeof(string), "value") };
 
-            var callExpr = Expression.Call(propertyExpression.Type.GetMethod("Parse", new[] {typeof (string)}), parseMethodParameters);
+            var callExpr = Expression.Call(propertyExpression.Type.GetMethod("Parse", new[] { typeof(string) }), parseMethodParameters);
 
-            var downcastToObject = Expression.Convert(callExpr, typeof (object));
+            var downcastToObject = Expression.Convert(callExpr, typeof(object));
 
             var result = Expression.Lambda<Func<string, object>>(downcastToObject, parseMethodParameters).Compile();
 

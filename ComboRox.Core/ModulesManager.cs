@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ComboRox.Core.Utilities;
+using ComboRox.Core.Utilities.Guard;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
+using System;
+using System.Collections.Generic;
 
 namespace ComboRox.Core
 {
     public class ModulesManager
     {
-        private static ModulesManager _instance;
-
-        public static ModulesManager GetManager
-        {
-            get { return _instance ?? (_instance = new ModulesManager()); }
-        }
-
-        public Dictionary<string, IModule> Modules { get; private set; }
+        private static ModulesManager instance;
 
         public ModulesManager(List<IModule> additionalModules = null)
         {
@@ -24,6 +19,30 @@ namespace ComboRox.Core
             {
                 additionalModules.ForEach(x => this.Modules.Add(x.ModuleName, x));
             }
+        }
+
+        public event Action<IResultData> DataPrepared;
+
+        public static ModulesManager GetManager
+        {
+            get { return instance ?? (instance = new ModulesManager()); }
+        }
+
+        public Dictionary<string, IModule> Modules { get; private set; }
+
+        public void RegisterModule(IModule module)
+        {
+            this.Modules.Add(module.ModuleName, module);
+        }
+
+        public void UnregisterModule(string moduleName)
+        {
+            this.Modules.Remove(moduleName);
+        }
+
+        public void UnregisterModule(IModule module)
+        {
+            this.UnregisterModule(module.ModuleName);
         }
 
         public IModulesSettings GetModulesSettings(IComboRequestJson comboRequestJson, IModulesSettings modulesSettingsObj)
@@ -38,25 +57,39 @@ namespace ComboRox.Core
                 modulesSettingsObj = new ModulesSettings();
             }
 
-            foreach (var module in Modules.Values)
+            foreach (var module in this.Modules.Values)
             {
-                module.Initialize(comboRequestJson, modulesSettingsObj);
+                modulesSettingsObj = module.Initialize(comboRequestJson, modulesSettingsObj);
             }
 
             return modulesSettingsObj;
         }
 
-        public IResultData ApplyModulesExpressions<TType>(IEnumerable<TType> collection,
-            ComboRequestJson comboRequestJson,
+        public IResultData ApplyModulesExpressions<TType>(
+            IEnumerable<TType> collection,
+            IComboRequestJson comboRequestJson,
             IModulesSettings modulesSettings = null)
             where TType : class
         {
             IModulesSettings settings = this.GetModulesSettings(comboRequestJson, modulesSettings);
-            IResultData resultObject = new ResultData();
 
             foreach (var module in this.Modules.Values)
             {
                 collection = module.ApplyExpression(collection, settings);
+            }
+
+            IResultData resultData = PrepareResult(collection);
+            this.DataPrepared.TriggerEvent(resultData);
+
+            return resultData;
+        }
+
+        private IResultData PrepareResult<TType>(IEnumerable<TType> collection)
+        {
+            IResultData resultObject = new ResultData();
+
+            foreach (var module in this.Modules.Values)
+            {
                 resultObject = module.ConstructResult(collection, resultObject);
             }
 

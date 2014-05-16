@@ -51,16 +51,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Sorting\SortingModuleTests\Initialize_Should.cs" />
+    <Compile Include="Sorting\SortingModuleTests\ConstructResult_Should.cs" />
+    <Compile Include="UserTestingClass.cs" />
     <Compile Include="ModulesManager\CustomTestingModule.cs" />
     <Compile Include="ModulesManager\ModulesManager_ModulesManager_Should.cs" />
     <Compile Include="Filters\FiltersBuilder\FiltersBuilder_Greate_Should.cs" />
-    <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilder_CreateFilterExpression_Should.cs" />
-    <Compile Include="Filters\FiltersExpressionBuilder\FiltersExpressionBuilderTestsBase.cs" />
+    <Compile Include="Filters\FiltersExpressionFactory\FiltersExpressionFactory_CreateFilterExpression_Should.cs" />
+    <Compile Include="Filters\FiltersExpressionFactory\FiltersExpressionFactoryTestsBase.cs" />
     <Compile Include="ModulesManager\ModulesManager_GetModulesSettings_Should.cs" />
     <Compile Include="ModulesManager\ModulesManager_ApplyModulesExpressions_Should.cs" />
     <Compile Include="Pagination\PaginationModule_Initialize_Should.cs" />
     <Compile Include="Pagination\PaginationModule_AppluExpression_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sorting\SortingModuleTests\ApplyExpression_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComboRox.Core\ComboRox.Core.csproj">
@@ -72,6 +76,10 @@
       <Name>ComboRox.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -92,6 +100,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MSBuildWithStyleCop.1.0.1\build\MSBuildWithStyleCop.Targets" Condition="Exists('..\packages\MSBuildWithStyleCop.1.0.1\build\MSBuildWithStyleCop.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

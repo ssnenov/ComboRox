@@ -1,23 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Reflection;
 using ComboRox.Core.Utilities;
+using ComboRox.Core.Utilities.Guard;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 
 namespace ComboRox.Core.Filters
 {
-    public static class FiltersExpressionBuilder
+    public static class FiltersExpressionFactory
     {
-        private static BinaryExpression ConcatenateAndOrExpressions(
-            IEnumerable<Filter> filters,
-            ParameterExpression itemParameter,
-            Type filterableClassType)
+        public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
         {
-            BinaryExpression where = null;
+            if (filters != null && filters.Count > 0)
+            {
+                Type filterableClassType = typeof(TType);
+                var itemParameter = Expression.Parameter(filterableClassType, "dataItem");
+
+                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter, filterableClassType), itemParameter);
+            }
+
+            return null;
+        }
+
+        private static Expression ConcatenateAndOrExpressions(
+        IEnumerable<Filter> filters,
+        ParameterExpression itemParameter,
+        Type filterableClassType)
+        {
+            Expression where = null;
             MemberExpression property;
-            BinaryExpression filterExpression;
+            Expression filterExpression;
 
             if (filters != null)
             {
@@ -34,10 +47,10 @@ namespace ComboRox.Core.Filters
 
                     if (filter.OrFilters != null && filter.OrFilters.Count > 0)
                     {
-                        BinaryExpression orFiltersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
-                        if (orFiltersExpressions != null)
+                        Expression filtersExpressions = ConcatenateAndOrExpressions(filter.OrFilters, itemParameter, filterableClassType);
+                        if (filtersExpressions != null)
                         {
-                            filterExpression = Expression.OrElse(filterExpression, orFiltersExpressions);
+                            filterExpression = Expression.OrElse(filterExpression, filtersExpressions);
                         }
                     }
 
@@ -55,12 +68,16 @@ namespace ComboRox.Core.Filters
             return where;
         }
 
-        private static BinaryExpression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)
+        private static Expression CompareExpressionByOperator(Operator op, MemberExpression property, ConstantExpression filterValue)
         {
             switch (op)
             {
-                case Operator.Contains:
-                    return null; //TODO
+                case Operator.Contains: // TODO: Test this functionality
+                    Guard.Requires(
+                        property.Type == typeof(string) && filterValue.Type == typeof(string),
+                        string.Format(@"You cannot use ""Contains"" operator for types {0} and {1}", property.Type, filterValue.Type));
+
+                    return Expression.Call(property, typeof(string).GetMethod("Contains"), filterValue);
 
                 case Operator.GreaterThan:
                     return Expression.GreaterThan(property, filterValue);
@@ -74,19 +91,6 @@ namespace ComboRox.Core.Filters
                 default:
                     return Expression.Equal(property, filterValue);
             }
-        }
-
-        public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
-        {
-            if (filters != null && filters.Count > 0)
-            {
-                Type filterableClassType = typeof(TType);
-                var itemParameter = Expression.Parameter(filterableClassType, "dataItem");
-
-                return Expression.Lambda<Func<TType, bool>>(ConcatenateAndOrExpressions(filters, itemParameter, filterableClassType), itemParameter);
-            }
-
-            return null;
         }
     }
 }

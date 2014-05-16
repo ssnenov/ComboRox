@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ComboRox.Models;
+using ComboRox.Models.Enums;
 using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core.Filters
 {
-    public class FiltersBuilder : IComponentBuilder<Filter, FilterObject>
+    public class FiltersFactory : IComponentFactory<Filter, FilterObject>
     {
         public List<Filter> Create(IEnumerable<FilterObject> componentObjects)
         {
@@ -21,10 +22,10 @@ namespace ComboRox.Core.Filters
         {
             return filterObjects.Select(filter => new Filter
                 {
-                    Operator = ExtractOperator(filter.op),
-                    PropertyName = filter.prop,
-                    Value = filter.value,
-                    OrFilters = filter.or != null ? ExtractFilters(filter.or) : null
+                    Operator = ExtractOperator(filter.Op),
+                    PropertyName = filter.Prop,
+                    Value = filter.Value,
+                    OrFilters = filter.Or != null ? ExtractFilters(filter.Or) : null
                 }).ToList();
         }
 

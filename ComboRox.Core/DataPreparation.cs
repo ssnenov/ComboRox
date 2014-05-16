@@ -1,16 +1,24 @@
 ﻿using System.Collections.Generic;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
+using System.Threading.Tasks;
 
 namespace ComboRox.Core
 {
     public class DataPreparation
     {
-        public static IResultData Prepare<TType>(IEnumerable<TType> collection, ComboRequestJson requestJson) where TType : class
+        public static IResultData Prepare<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
         {
-            var modulesManager = new ModulesManager();
+            return ModulesManager.GetManager.ApplyModulesExpressions(collection, requestJson);
+        }
 
-            return modulesManager.ApplyModulesExpressions(collection, requestJson);
+        public static async Task<IResultData> PrepareAsync<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
+        {
+            var backgroundTast =
+                Task<IResultData>.Factory.StartNew(() => 
+                    ModulesManager.GetManager.ApplyModulesExpressions(collection, requestJson));
+
+            return await backgroundTast;
         }
     }
 }
