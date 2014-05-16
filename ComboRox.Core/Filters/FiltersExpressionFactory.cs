@@ -78,6 +78,7 @@ namespace ComboRox.Core.Filters
                         string.Format(@"You cannot use ""Contains"" operator for types {0} and {1}", property.Type, filterValue.Type));
 
                     return Expression.Call(property, typeof(string).GetMethod("Contains"), filterValue);
+
                 case Operator.GreaterThan:
                     return Expression.GreaterThan(property, filterValue);
 
