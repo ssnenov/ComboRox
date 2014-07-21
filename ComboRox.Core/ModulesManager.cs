@@ -1,5 +1,5 @@
 ﻿using ComboRox.Core.Utilities;
-using ComboRox.Core.Utilities.Guard;
+using ComboRox.Core.Utilities.SimpleGuard;
 using ComboRox.Models;
 using ComboRox.Models.JsonObjects;
 using System;
@@ -32,16 +32,22 @@ namespace ComboRox.Core
 
         public void RegisterModule(IModule module)
         {
+			Guard.Requires(module, "module").IsNotNull();
+
             this.Modules.Add(module.ModuleName, module);
         }
 
         public void UnregisterModule(string moduleName)
         {
+			Guard.Requires(moduleName, "moduleName").IsNotNullOrEmpty();
+
             this.Modules.Remove(moduleName);
         }
 
         public void UnregisterModule(IModule module)
         {
+			Guard.Requires(module, "module").IsNotNull();
+
             this.UnregisterModule(module.ModuleName);
         }
 
@@ -71,14 +77,15 @@ namespace ComboRox.Core
             IModulesSettings modulesSettings = null)
             where TType : class
         {
+			IResultData resultData = new ResultData();
             IModulesSettings settings = this.GetModulesSettings(comboRequestJson, modulesSettings);
 
             foreach (var module in this.Modules.Values)
             {
                 collection = module.ApplyExpression(collection, settings);
+				resultData = module.ConstructResult(collection, resultData);
             }
 
-            IResultData resultData = PrepareResult(collection);
             this.DataPrepared.TriggerEvent(resultData);
 
             return resultData;

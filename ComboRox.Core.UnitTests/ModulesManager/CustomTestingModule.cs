@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ComboRox.Core.UnitTests.ModulesManager
 {
-    public class CustomTestingModule : IModule
+    public sealed class CustomTestingModule : IModule
     {
         private const string ModuleName = "CustomTestingModule";
 

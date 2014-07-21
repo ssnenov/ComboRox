@@ -45,7 +45,6 @@ namespace ComboRox.Core.Pagination
         public IResultData ConstructResult<TType>(IEnumerable<TType> collection, IResultData resultObject)
         {
             resultObject.Data = collection;
-            resultObject.Total = collection.Count();
 
             return resultObject;
         }

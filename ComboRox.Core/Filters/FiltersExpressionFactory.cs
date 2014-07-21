@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using ComboRox.Core.Utilities;
-using ComboRox.Core.Utilities.Guard;
+﻿using ComboRox.Core.Utilities;
+using ComboRox.Core.Utilities.SimpleGuard;
 using ComboRox.Models;
 using ComboRox.Models.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace ComboRox.Core.Filters
 {
     public static class FiltersExpressionFactory
     {
-        public static Expression<Func<TType, bool>> Create<TType>(List<Filter> filters) where TType : class
+        public static Expression<Func<TType, bool>> Create<TType>(ICollection<Filter> filters) where TType : class
         {
             if (filters != null && filters.Count > 0)
             {
@@ -38,7 +38,7 @@ namespace ComboRox.Core.Filters
                 {
                     property = RecursivelyPropertyInfoGetter.CreatePropertyExpression(itemParameter, filter.PropertyName);
 
-                    filter.Value = ValueParser.ParseValueToPropertyType(filterableClassType, property, filter.Value);
+                    filter.Value = ValueParser.ParseValueToPropertyType(property, filter.Value);
 
                     filterExpression = CompareExpressionByOperator(
                                 filter.Operator,

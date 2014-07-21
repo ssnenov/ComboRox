@@ -26,7 +26,8 @@ namespace ComboRox.Core.Filters
                     PropertyName = filter.Prop,
                     Value = filter.Value,
                     OrFilters = filter.Or != null ? ExtractFilters(filter.Or) : null
-                }).ToList();
+                })
+				.ToList();
         }
 
         private static Operator ExtractOperator(string op)

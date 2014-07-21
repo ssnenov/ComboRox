@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ComboRox.Core
 {
-    public class DataPreparation
+    public static class DataPreparation
     {
         public static IResultData Prepare<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
         {
@@ -14,11 +14,11 @@ namespace ComboRox.Core
 
         public static async Task<IResultData> PrepareAsync<TType>(IEnumerable<TType> collection, IComboRequestJson requestJson) where TType : class
         {
-            var backgroundTast =
+            var backgroundTask =
                 Task<IResultData>.Factory.StartNew(() => 
                     ModulesManager.GetManager.ApplyModulesExpressions(collection, requestJson));
 
-            return await backgroundTast;
+            return await backgroundTask;
         }
     }
 }

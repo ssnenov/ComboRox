@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,12 +48,12 @@
     <Compile Include="Sorting\SortingExpressionFactory.cs" />
     <Compile Include="Sorting\SortingModule.cs" />
     <Compile Include="Utilities\EventHandler.cs" />
-    <Compile Include="Utilities\Guard\ArrayRequirement.cs" />
-    <Compile Include="Utilities\Guard\Guard.cs" />
-    <Compile Include="Utilities\Guard\GuidRequirement.cs" />
-    <Compile Include="Utilities\Guard\IEnumerableRequirement.cs" />
-    <Compile Include="Utilities\Guard\RequirementBase.cs" />
-    <Compile Include="Utilities\Guard\StringRequirement.cs" />
+    <Compile Include="Utilities\SimpleGuard\ArrayRequirement.cs" />
+    <Compile Include="Utilities\SimpleGuard\Guard.cs" />
+    <Compile Include="Utilities\SimpleGuard\GuidRequirement.cs" />
+    <Compile Include="Utilities\SimpleGuard\IEnumerableRequirement.cs" />
+    <Compile Include="Utilities\SimpleGuard\RequirementBase.cs" />
+    <Compile Include="Utilities\SimpleGuard\StringRequirement.cs" />
     <Compile Include="Utilities\ValueParser.cs" />
     <Compile Include="Utilities\RecursivelyPropertyInfoGetter.cs" />
     <Compile Include="IComponentFactory.cs" />

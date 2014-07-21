@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ComboRox.Core.Utilities;
-using ComboRox.Core.Utilities.Guard;
+using ComboRox.Core.Utilities.SimpleGuard;
 using ComboRox.Models.JsonObjects;
 
 namespace ComboRox.Core.Sorting
 {
-    public class SortingExpressionFactory
+    public static class SortingExpressionFactory
     {
         private static ParameterExpression itemParameter;
 

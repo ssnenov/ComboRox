@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.Caching;
 
 namespace ComboRox.Core.Utilities
 {
     internal class ValueParser
     {
-        private static readonly Dictionary<string, Func<string, object>> CachedLambdas = new Dictionary<string, Func<string, object>>(10); 
+		private const string CacheKeyPrefix = "Types_";
 
-        internal static object ParseValueToPropertyType(Type classType, Expression propertyExpression, object value)
+        internal static object ParseValueToPropertyType(Expression propertyExpression, object value)
         {
+			SimpleGuard.Guard.Requires(propertyExpression, "propertyExpression").IsNotNull();
+			SimpleGuard.Guard.Requires(value, "value").IsNotNull();
+
             var valueAsString = value as string;
             if (propertyExpression.Type == typeof(string) || valueAsString == null)
             {
@@ -29,9 +33,14 @@ namespace ComboRox.Core.Utilities
         private static Func<string, object> GetLambdaFromCache(Expression propertyExpression)
         {
             string typeAssemblyFullName = propertyExpression.Type.FullName;
-            if (CachedLambdas.ContainsKey(typeAssemblyFullName))
+			Func<string, object> lambda = MemoryCache.Default.Get(string.Format(
+				"{0}{1}",
+				ValueParser.CacheKeyPrefix,
+				typeAssemblyFullName)) as Func<string, object>;
+			
+            if (lambda != null)
             {
-                return CachedLambdas[typeAssemblyFullName];
+                return lambda;
             }
 
             var parseMethodParameters = new[] { Expression.Parameter(typeof(string), "value") };
@@ -42,7 +51,10 @@ namespace ComboRox.Core.Utilities
 
             var result = Expression.Lambda<Func<string, object>>(downcastToObject, parseMethodParameters).Compile();
 
-            CachedLambdas.Add(typeAssemblyFullName, result);
+			MemoryCache.Default.Set(
+				string.Format("{0}{1}", ValueParser.CacheKeyPrefix, typeAssemblyFullName),
+				result,
+				new CacheItemPolicy());
 
             return result;
         }

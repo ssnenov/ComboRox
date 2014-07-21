@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace ComboRox.Core.Utilities.Guard
+namespace ComboRox.Core.Utilities.SimpleGuard
 {
-    public static class ArrayRequirement
+    internal static class ArrayRequirement
     {
         public static RequirementBase<TType[]> IsNotEmpty<TType>(this RequirementBase<TType[]> requirement)
         {
             if (requirement.ParameterValue.Length == 0)
             {
-                throw new Exception(string.Format("Sequence \"{0}\" contains no elements", requirement.ParameterName));
+                throw new ArgumentException(string.Format("Sequence \"{0}\" contains no elements", requirement.ParameterName));
             }
 
             return requirement;
