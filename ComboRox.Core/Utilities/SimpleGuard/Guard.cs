@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ComboRox.Core.Utilities.Guard
+namespace ComboRox.Core.Utilities.SimpleGuard
 {
     public abstract class Guard
     {
@@ -11,6 +11,16 @@ namespace ComboRox.Core.Utilities.Guard
 
         public static RequirementBase<T> Requires<T>(Func<T> selector, string parameterName)
         {
+			if (selector == null)
+			{
+				throw new ArgumentNullException("selector");
+			}
+
+			if (string.IsNullOrEmpty(parameterName))
+			{
+				throw new ArgumentNullException("parameterName");
+			}
+
             T value = selector.Invoke();
 
             return new RequirementBase<T>(value, parameterName);
@@ -20,7 +30,7 @@ namespace ComboRox.Core.Utilities.Guard
         {
             if (!expression)
             {
-                throw new Exception(exceptionMessage);
+                throw new ArgumentException(exceptionMessage);
             }
         }
     }

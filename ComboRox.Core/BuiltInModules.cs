@@ -5,7 +5,7 @@ using ComboRox.Core.Sorting;
 
 namespace ComboRox.Core
 {
-    public class BuiltInModules
+    internal static class BuiltInModules
     {
         private static Dictionary<string, IModule> modules;
 
